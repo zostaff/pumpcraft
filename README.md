@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/hero.svg" width="100%" alt="PUMPCRAFT"></p>
+<p align="center"><img src="assets/hero.svg?v=2" width="100%" alt="PUMPCRAFT"></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/node-22%2B-00d18c?style=for-the-badge&labelColor=0a1a14" alt="node">
@@ -20,18 +20,18 @@
   <b><a href="#07--faq">[ faq ]</a></b>
 </p>
 
-<p align="center"><img src="assets/divider.svg" width="100%"></p>
+<p align="center"><img src="assets/divider.svg?v=2" width="100%"></p>
 
-<p align="center"><img src="assets/specs.svg" width="100%" alt="the numbers"></p>
+<p align="center"><img src="assets/specs.svg?v=2" width="100%" alt="the numbers"></p>
 
 **13 open-source bots that reverse-engineer, trade, analyze, and x-ray pump.fun.** Built from analyzing 666 on-chain wallets across 7 trading strategies, decoding pump.fun's V3 migration, and tracking 6.85M sandwich attacks over 12 months.
 
 Each bot is a standalone package — its own `package.json`, CLI, config, and (where applicable) dashboard. Clone the monorepo or grab a single package. Zero paid dependencies.
 
-<p align="center"><img src="assets/divider.svg" width="100%"></p>
+<p align="center"><img src="assets/divider.svg?v=2" width="100%"></p>
 
 <a id="01--quick-start"></a>
-<p align="center"><img src="assets/section-01.svg" width="100%" alt="section-01"></p>
+<p align="center"><img src="assets/section-01.svg?v=2" width="100%" alt="section-01"></p>
 
 ```bash
 git clone https://github.com/zostaff/pumpcraft.git
@@ -76,12 +76,12 @@ Some packages (sniper, copy-trader, basic-trader) also need:
 WALLET_PRIVATE_KEY=your_base58_private_key
 ```
 
-<p align="center"><img src="assets/divider.svg" width="100%"></p>
+<p align="center"><img src="assets/divider.svg?v=2" width="100%"></p>
 
 <a id="02--the-arsenal"></a>
-<p align="center"><img src="assets/section-02.svg" width="100%" alt="section-02"></p>
+<p align="center"><img src="assets/section-02.svg?v=2" width="100%" alt="section-02"></p>
 
-<p align="center"><img src="assets/tree.svg" width="100%" alt="tree"></p>
+<p align="center"><img src="assets/tree.svg?v=2" width="100%" alt="tree"></p>
 
 ### Part 1 — Foundation (7 bots)
 
@@ -114,12 +114,12 @@ From *"They patched V3. I built 6 more bots anyway."*
 
 **[shared-lib](packages/shared-lib)** — 404 lines across 7 modules: `config.mjs`, `constants.mjs`, `pumpfun.mjs`, `rpc.mjs`, `tx.mjs`, `wallet.mjs`, `ws.mjs`. Shared by all JS packages.
 
-<p align="center"><img src="assets/divider.svg" width="100%"></p>
+<p align="center"><img src="assets/divider.svg?v=2" width="100%"></p>
 
 <a id="03--research"></a>
-<p align="center"><img src="assets/section-03.svg" width="100%" alt="section-03"></p>
+<p align="center"><img src="assets/section-03.svg?v=2" width="100%" alt="section-03"></p>
 
-<p align="center"><img src="assets/strategies.svg" width="100%" alt="strategies"></p>
+<p align="center"><img src="assets/strategies.svg?v=2" width="100%" alt="strategies"></p>
 
 These bots came from analyzing real on-chain data:
 
@@ -130,7 +130,7 @@ These bots came from analyzing real on-chain data:
 - **Jito MEV** — BAM Direct Bundle Ingest, 34% stake preconfirmations
 - **Holder Rewards** — replaced Cashback (Sept 2026), fees distributed to holders with >$20
 
-<p align="center"><img src="assets/flow.svg" width="100%" alt="token lifecycle"></p>
+<p align="center"><img src="assets/flow.svg?v=2" width="100%" alt="token lifecycle"></p>
 
 <details>
 <summary><b>Strategy breakdown (text version)</b></summary>
@@ -147,10 +147,10 @@ These bots came from analyzing real on-chain data:
 
 </details>
 
-<p align="center"><img src="assets/divider.svg" width="100%"></p>
+<p align="center"><img src="assets/divider.svg?v=2" width="100%"></p>
 
 <a id="04--architecture"></a>
-<p align="center"><img src="assets/section-04.svg" width="100%" alt="section-04"></p>
+<p align="center"><img src="assets/section-04.svg?v=2" width="100%" alt="section-04"></p>
 
 ```
 pumpcraft/
@@ -185,10 +185,10 @@ package-name/
 └── dashboard/         # web UI (if applicable)
 ```
 
-<p align="center"><img src="assets/divider.svg" width="100%"></p>
+<p align="center"><img src="assets/divider.svg?v=2" width="100%"></p>
 
 <a id="05--stack"></a>
-<p align="center"><img src="assets/section-05.svg" width="100%" alt="section-05"></p>
+<p align="center"><img src="assets/section-05.svg?v=2" width="100%" alt="section-05"></p>
 
 | Layer | Tech | Used By |
 |-------|------|---------|
@@ -202,10 +202,10 @@ package-name/
 | MEV | **Jito bundles** | firstkiller, bundlescan |
 | Infra | Zero paid dependencies | Everything is MIT/Apache |
 
-<p align="center"><img src="assets/divider.svg" width="100%"></p>
+<p align="center"><img src="assets/divider.svg?v=2" width="100%"></p>
 
 <a id="06--article"></a>
-<p align="center"><img src="assets/section-06.svg" width="100%" alt="section-06"></p>
+<p align="center"><img src="assets/section-06.svg?v=2" width="100%" alt="section-06"></p>
 
 The full write-up lives in [`ARTICLE.md`](ARTICLE.md):
 
@@ -215,10 +215,10 @@ The full write-up lives in [`ARTICLE.md`](ARTICLE.md):
 >
 > **Part 2:** They patched V3. I built 6 more bots anyway — from same-block Jito sniping to MEV sandwich detection to a 11k-line multi-modal stream sniper.
 
-<p align="center"><img src="assets/divider.svg" width="100%"></p>
+<p align="center"><img src="assets/divider.svg?v=2" width="100%"></p>
 
 <a id="07--faq"></a>
-<p align="center"><img src="assets/section-07.svg" width="100%" alt="section-07"></p>
+<p align="center"><img src="assets/section-07.svg?v=2" width="100%" alt="section-07"></p>
 
 <details>
 <summary><b>Do I need SOL to run these?</b></summary>
@@ -250,9 +250,9 @@ These are research tools that show how pump.fun bots work. Profitability depends
 Some bots also exist as standalone repos (pumpnuke, firstkiller, bundlescan, pumpghost). This monorepo bundles all 13 in one place with the shared library and the full article. The standalone repos are identical copies.
 </details>
 
-<p align="center"><img src="assets/divider.svg" width="100%"></p>
+<p align="center"><img src="assets/divider.svg?v=2" width="100%"></p>
 
-<p align="center"><img src="assets/disclaimer.svg" width="100%" alt="disclaimer"></p>
+<p align="center"><img src="assets/disclaimer.svg?v=2" width="100%" alt="disclaimer"></p>
 
 ## What This Is NOT
 
@@ -261,6 +261,6 @@ Some bots also exist as standalone repos (pumpnuke, firstkiller, bundlescan, pum
 - Guaranteed profit
 - Financial advice
 
-<p align="center"><img src="assets/divider.svg" width="100%"></p>
+<p align="center"><img src="assets/divider.svg?v=2" width="100%"></p>
 
-<p align="center"><img src="assets/footer.svg" width="100%" alt="built by zostaff"></p>
+<p align="center"><img src="assets/footer.svg?v=2" width="100%" alt="built by zostaff"></p>
