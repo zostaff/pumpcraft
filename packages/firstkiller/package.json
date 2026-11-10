@@ -1,0 +1,21 @@
+{
+  "name": "firstblood",
+  "version": "1.0.0",
+  "description": "Jito Bundle Backrunner for pump.fun V3 memecoins on Solana",
+  "type": "module",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js",
+    "dry": "node bot.js --dry-run"
+  },
+  "dependencies": {
+    "@solana/spl-token": "^0.4.12",
+    "@solana/web3.js": "^1.98.0",
+    "bs58": "^6.0.0",
+    "dotenv": "^16.4.7",
+    "ws": "^8.18.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

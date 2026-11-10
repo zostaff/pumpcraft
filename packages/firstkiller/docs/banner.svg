@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="380" viewBox="0 0 1200 380">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#140306"/>
+      <stop offset="1" stop-color="#050102"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ff1a2e" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#ff1a2e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="blood" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff3344"/>
+      <stop offset="0.55" stop-color="#d0021b"/>
+      <stop offset="1" stop-color="#7a0010"/>
+    </linearGradient>
+    <linearGradient id="drip" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b80016"/>
+      <stop offset="1" stop-color="#e0102a"/>
+    </linearGradient>
+    <linearGradient id="tooth" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e6e1dc"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="140%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#ff0022" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="380" rx="18" fill="url(#bg)"/>
+  <ellipse cx="700" cy="190" rx="560" ry="170" fill="url(#glow)"/>
+
+  <!-- vampire fangs -->
+  <g transform="translate(70,105)" filter="url(#shadow)">
+    <!-- gum -->
+    <path d="M0 40 Q110 -20 220 40 L220 62 Q110 18 0 62 Z" fill="#8a0a1a"/>
+    <!-- small teeth -->
+    <path d="M14 56 Q24 50 36 47 L38 74 Q26 80 16 72 Z" fill="url(#tooth)"/>
+    <path d="M86 36 Q100 34 112 35 L111 66 Q99 72 88 66 Z" fill="url(#tooth)"/>
+    <path d="M112 35 Q124 34 136 36 L134 66 Q123 72 113 66 Z" fill="url(#tooth)"/>
+    <path d="M184 47 Q196 50 206 56 L204 72 Q194 80 182 74 Z" fill="url(#tooth)"/>
+    <!-- left fang -->
+    <path d="M38 47 Q60 39 84 37 L82 70 Q70 112 58 150 Q50 108 40 74 Z" fill="url(#tooth)"/>
+    <!-- right fang -->
+    <path d="M136 37 Q160 39 182 47 L180 74 Q170 108 162 150 Q150 112 138 70 Z" fill="url(#tooth)"/>
+    <!-- fang shading -->
+    <path d="M70 70 Q64 108 58 146" stroke="#cfc8c0" stroke-width="2" fill="none"/>
+    <path d="M150 70 Q156 108 162 146" stroke="#cfc8c0" stroke-width="2" fill="none"/>
+    <!-- blood on fang tips -->
+    <path d="M58 150 Q53 160 58 167 Q63 160 58 150 Z" fill="#d0021b"/>
+    <path d="M162 150 Q157 158 162 164 Q167 158 162 150 Z" fill="#d0021b">
+      <animate attributeName="opacity" values="1;1;0.6;1" dur="3s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- title -->
+  <text x="320" y="235" textLength="800" lengthAdjust="spacingAndGlyphs"
+        font-family="Impact, Haettenschweiler, 'Arial Narrow Bold', 'Arial Black', sans-serif"
+        font-size="168" font-weight="900" fill="url(#blood)" filter="url(#shadow)"
+        letter-spacing="2">FIRSTKILLER</text>
+
+  <!-- blood drip from the last letter -->
+  <g>
+    <path d="M1080 226 L1117 226 Q1118 236 1112 240 Q1108 244 1108 256 Q1108 284 1106 300
+             Q1104 316 1097 316 Q1090 316 1089 300 Q1088 282 1090 262 Q1091 250 1086 244
+             Q1080 238 1080 226 Z" fill="url(#drip)"/>
+    <path d="M1112 236 Q1116 244 1115 254 Q1114 262 1111 262 Q1108 262 1109 252 Z" fill="url(#drip)"/>
+    <ellipse cx="1094" cy="296" rx="2.2" ry="7" fill="#ff7a85" opacity="0.55"/>
+    <!-- falling drop -->
+    <path d="M1097 0 Q1091 9 1097 14 Q1103 9 1097 0 Z" fill="#d0021b">
+      <animateTransform attributeName="transform" type="translate" values="0 312;0 312;0 362" keyTimes="0;0.55;1" dur="2.6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.55;1" dur="2.6s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <text x="322" y="295" font-family="'SF Mono', Menlo, Consolas, monospace" font-size="19"
+        fill="#b8a3a6" letter-spacing="3">JITO BUNDLE BACKRUNNER · PUMP.FUN V3 · SOLANA</text>
+</svg>
