@@ -1,0 +1,9 @@
+numpy>=1.26
+python-dotenv>=1.0
+Pillow>=10.0
+
+# CLI resolvers for direct URLs (installed into PATH with the package)
+streamlink>=6.0
+yt-dlp>=2024.1.1
+
+# System dependency: ffmpeg (brew install ffmpeg / apt install ffmpeg)

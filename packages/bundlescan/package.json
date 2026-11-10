@@ -1,0 +1,23 @@
+{
+  "name": "bundlescan",
+  "version": "0.1.0",
+  "description": "Defensive MEV bundle analyzer for Solana — detects sandwich attacks, arbitrage and liquidations, quantifies victim losses, and protects wallets.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "scan": "node bot/scanner.mjs",
+    "guard": "node bot/wallet-guard.mjs",
+    "stats": "node bot/stats.mjs",
+    "simulate": "node bot/simulator-cli.mjs",
+    "dashboard": "node dashboard/server.mjs"
+  },
+  "dependencies": {
+    "@solana/spl-token": "^0.4.12",
+    "@solana/web3.js": "^1.98.0",
+    "bs58": "^6.0.0",
+    "dotenv": "^16.0.0",
+    "ws": "^8.18.0"
+  }
+}

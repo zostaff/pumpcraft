@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PUMPNUKE Dashboard</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --border: #1e1e2e;
+    --text: #e0e0e0;
+    --dim: #666;
+    --green: #00ff88;
+    --red: #ff4444;
+    --yellow: #ffaa00;
+    --blue: #4488ff;
+    --cyan: #00cccc;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 16px;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header h1 { font-size: 18px; letter-spacing: 2px; color: var(--green); }
+  .header .mode { padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; }
+  .mode-paper { background: #332200; color: var(--yellow); }
+  .mode-live { background: #330000; color: var(--red); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .card h2 { font-size: 12px; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .stat-row { display: flex; justify-content: space-between; padding: 4px 0; }
+  .stat-label { color: var(--dim); }
+  .stat-value { font-weight: bold; }
+  .stat-value.green { color: var(--green); }
+  .stat-value.red { color: var(--red); }
+  .stat-value.yellow { color: var(--yellow); }
+  .stat-value.blue { color: var(--blue); }
+  .form-group { margin-bottom: 10px; }
+  .form-group label { display: block; color: var(--dim); font-size: 11px; margin-bottom: 4px; }
+  .form-group input, .form-group select {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 13px;
+  }
+  .btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    letter-spacing: 1px;
+  }
+  .btn-start { background: var(--green); color: #000; }
+  .btn-stop { background: var(--yellow); color: #000; }
+  .btn-panic { background: var(--red); color: #fff; }
+  .btn:hover { opacity: 0.85; }
+  .trades-log {
+    max-height: 400px;
+    overflow-y: auto;
+    font-size: 12px;
+  }
+  .trade-entry {
+    padding: 3px 0;
+    border-bottom: 1px solid #111;
+    display: flex;
+    gap: 10px;
+  }
+  .trade-entry .time { color: var(--dim); min-width: 70px; }
+  .trade-entry .type { min-width: 80px; font-weight: bold; }
+  .trade-entry .type.buy { color: var(--green); }
+  .trade-entry .type.sell, .trade-entry .type.cleanup-sell, .trade-entry .type.panic-sell { color: var(--red); }
+  .trade-entry .type.fund { color: var(--yellow); }
+  .trade-entry .type.drain, .trade-entry .type.panic-drain { color: var(--blue); }
+  .trade-entry .wallet { color: var(--cyan); min-width: 80px; }
+  .trade-entry .amount { color: var(--dim); }
+  .jobs-table { width: 100%; border-collapse: collapse; }
+  .jobs-table th { text-align: left; color: var(--dim); font-size: 11px; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+  .jobs-table td { padding: 6px 8px; border-bottom: 1px solid #111; }
+  .jobs-table tr:hover { background: rgba(255,255,255,0.02); }
+  .status { padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: bold; }
+  .status-running { background: #002200; color: var(--green); }
+  .status-funding, .status-buying { background: #332200; color: var(--yellow); }
+  .status-completed { background: #111; color: var(--dim); }
+  .status-failed { background: #220000; color: var(--red); }
+  .status-prepared { background: #001133; color: var(--blue); }
+  .status-stopped, .status-panic-stopped { background: #221100; color: var(--yellow); }
+  .full-width { grid-column: 1 / -1; }
+  .empty { color: var(--dim); text-align: center; padding: 30px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>PUMPNUKE</h1>
+  <span class="mode" id="mode-badge">...</span>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h2>New Job</h2>
+    <div class="form-group">
+      <label>Token Address (CA)</label>
+      <input type="text" id="mint" placeholder="DYdfuR9GoeNHp1eTRiqkNSMVGPpSTQCgjiQ8Hvhxpump">
+    </div>
+    <div class="grid" style="gap:8px">
+      <div class="form-group">
+        <label>Budget (SOL)</label>
+        <input type="number" id="budget" value="0.5" step="0.1">
+      </div>
+      <div class="form-group">
+        <label>Wallets</label>
+        <input type="number" id="wallets" value="8" min="2" max="20">
+      </div>
+      <div class="form-group">
+        <label>Strategy</label>
+        <select id="strategy">
+          <option value="staggered">Staggered</option>
+          <option value="basic">Basic</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Duration (min)</label>
+        <input type="number" id="duration" value="15" min="1">
+      </div>
+    </div>
+    <button class="btn btn-start" onclick="startJob()">START</button>
+  </div>
+
+  <div class="card" id="active-job-card">
+    <h2>Active Job</h2>
+    <div id="active-job" class="empty">No active job</div>
+  </div>
+
+  <div class="card full-width">
+    <h2>Jobs</h2>
+    <table class="jobs-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Status</th>
+          <th>Strategy</th>
+          <th>Budget</th>
+          <th>Buys</th>
+          <th>Sells</th>
+          <th>Cycles</th>
+          <th>SOL Spent</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="jobs-body"></tbody>
+    </table>
+    <div id="no-jobs" class="empty">No jobs yet</div>
+  </div>
+
+  <div class="card full-width">
+    <h2>Trade Log</h2>
+    <div class="trades-log" id="trades-log">
+      <div class="empty">No trades yet</div>
+    </div>
+  </div>
+</div>
+
+<script>
+let currentJobId = null;
+let refreshTimer = null;
+
+async function api(path, method = 'GET', body = null) {
+  const opts = { method, headers: { 'Content-Type': 'application/json' } };
+  if (body) opts.body = JSON.stringify(body);
+  const res = await fetch('/api' + path, opts);
+  return res.json();
+}
+
+async function startJob() {
+  const mint = document.getElementById('mint').value.trim();
+  if (!mint) return alert('Token address required');
+  const data = await api('/jobs', 'POST', {
+    mint,
+    budget: parseFloat(document.getElementById('budget').value),
+    numWallets: parseInt(document.getElementById('wallets').value),
+    strategy: document.getElementById('strategy').value,
+    durationMin: parseInt(document.getElementById('duration').value),
+  });
+  if (data.error) return alert(data.error);
+  currentJobId = data.id;
+  refresh();
+}
+
+async function stopJob(id) {
+  await api(`/jobs/${id}/stop`, 'POST');
+  refresh();
+}
+
+async function panicJob(id) {
+  if (!confirm('PANIC SELL — sell all tokens and drain all wallets?')) return;
+  await api(`/jobs/${id}/panic`, 'POST');
+  refresh();
+}
+
+async function refresh() {
+  try {
+    const data = await api('/jobs');
+    const badge = document.getElementById('mode-badge');
+    badge.textContent = data.dryRun ? 'PAPER MODE' : 'LIVE';
+    badge.className = 'mode ' + (data.dryRun ? 'mode-paper' : 'mode-live');
+
+    const tbody = document.getElementById('jobs-body');
+    const noJobs = document.getElementById('no-jobs');
+
+    if (!data.jobs?.length) {
+      tbody.innerHTML = '';
+      noJobs.style.display = 'block';
+    } else {
+      noJobs.style.display = 'none';
+      tbody.innerHTML = data.jobs.map(j => `
+        <tr>
+          <td>${j.id.slice(0,8)}</td>
+          <td><span class="status status-${j.status}">${j.status}</span></td>
+          <td>${j.strategy}</td>
+          <td>${j.budget} SOL</td>
+          <td style="color:var(--green)">${j.stats?.buys || 0}</td>
+          <td style="color:var(--red)">${j.stats?.sells || 0}</td>
+          <td>${j.stats?.cycles || 0}</td>
+          <td>${(j.stats?.solSpent || 0).toFixed(4)}</td>
+          <td>
+            ${['running','funding','buying'].includes(j.status) ? `
+              <button class="btn btn-stop" onclick="stopJob('${j.id}')" style="margin-right:4px;padding:4px 8px">STOP</button>
+              <button class="btn btn-panic" onclick="panicJob('${j.id}')" style="padding:4px 8px">PANIC</button>
+            ` : ''}
+          </td>
+        </tr>
+      `).join('');
+
+      const active = data.jobs.find(j => ['running','funding','buying'].includes(j.status));
+      if (active) currentJobId = active.id;
+    }
+
+    if (currentJobId) {
+      const job = await api(`/jobs/${currentJobId}`);
+      if (job && !job.error) {
+        renderActiveJob(job);
+        renderTrades(job.recentTrades || []);
+      }
+    }
+  } catch (err) {
+    console.error('refresh error:', err);
+  }
+}
+
+function renderActiveJob(job) {
+  const el = document.getElementById('active-job');
+  const elapsed = job.createdAt ? Math.floor((Date.now() - new Date(job.createdAt).getTime()) / 1000) : 0;
+  const mins = Math.floor(elapsed / 60);
+  const secs = elapsed % 60;
+
+  el.innerHTML = `
+    <div class="stat-row"><span class="stat-label">ID</span><span class="stat-value">${job.id}</span></div>
+    <div class="stat-row"><span class="stat-label">Status</span><span class="stat-value"><span class="status status-${job.status}">${job.status}</span></span></div>
+    <div class="stat-row"><span class="stat-label">Mint</span><span class="stat-value" style="font-size:11px">${job.mint?.slice(0,20)}...</span></div>
+    <div class="stat-row"><span class="stat-label">Strategy</span><span class="stat-value">${job.strategy}</span></div>
+    <div class="stat-row"><span class="stat-label">Elapsed</span><span class="stat-value">${mins}m ${secs}s</span></div>
+    <div class="stat-row"><span class="stat-label">Wallets</span><span class="stat-value">${job.numWallets}</span></div>
+    <hr style="border-color:var(--border);margin:8px 0">
+    <div class="stat-row"><span class="stat-label">Buys</span><span class="stat-value green">${job.stats?.buys || 0}</span></div>
+    <div class="stat-row"><span class="stat-label">Sells</span><span class="stat-value red">${job.stats?.sells || 0}</span></div>
+    <div class="stat-row"><span class="stat-label">Cycles</span><span class="stat-value">${job.stats?.cycles || 0}</span></div>
+    <div class="stat-row"><span class="stat-label">SOL Spent</span><span class="stat-value yellow">${(job.stats?.solSpent || 0).toFixed(4)}</span></div>
+    ${job.error ? `<div class="stat-row"><span class="stat-label">Error</span><span class="stat-value red">${job.error}</span></div>` : ''}
+  `;
+}
+
+function renderTrades(trades) {
+  const el = document.getElementById('trades-log');
+  if (!trades.length) {
+    el.innerHTML = '<div class="empty">No trades yet</div>';
+    return;
+  }
+  el.innerHTML = trades.slice().reverse().map(t => `
+    <div class="trade-entry">
+      <span class="time">${t.at?.slice(11,19) || ''}</span>
+      <span class="type ${t.type}">${t.type}</span>
+      <span class="wallet">${(t.wallet || '').slice(0,8)}..</span>
+      <span class="amount">${t.sol ? t.sol.toFixed(4) + ' SOL' : ''} ${t.pct ? t.pct + '%' : ''}</span>
+      <span style="color:${t.status === 'failed' ? 'var(--red)' : 'var(--dim)'}">${t.status}${t.simulated ? ' (sim)' : ''}</span>
+    </div>
+  `).join('');
+}
+
+refresh();
+refreshTimer = setInterval(refresh, 3000);
+</script>
+</body>
+</html>

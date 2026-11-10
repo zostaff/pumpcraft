@@ -1,0 +1,31 @@
+# All Python dependencies of the project (merge of ingestion/ vision/ audio/ signal/requirements.txt).
+# pip install -r requirements.txt   (or scripts/build.sh)
+# System: ffmpeg (brew install ffmpeg / apt install ffmpeg); optionally tesseract
+
+# --- common
+numpy>=1.26
+python-dotenv>=1.0
+Pillow>=10.0
+
+# --- ingestion: CLI resolvers for direct stream URLs (installed into PATH)
+streamlink>=6.0
+yt-dlp>=2024.1.1
+
+# --- vision
+# macOS: Apple Vision OCR (OCR_ENGINE=auto picks it) — ~94 ms/frame vs ~720 ms for EasyOCR on MPS
+pyobjc-framework-Vision>=10; sys_platform == "darwin"
+pyobjc-framework-Quartz>=10; sys_platform == "darwin"
+easyocr>=1.7
+# headless build: easyocr already pulls opencv-python-headless; do not install
+# opencv-python alongside it — removing either one breaks cv2
+opencv-python-headless>=4.8
+# for OCR_ENGINE=tesseract (+ the system tesseract binary):
+# pytesseract>=0.3.10
+
+# --- audio (pulls ctranslate2 + onnxruntime for silero VAD)
+faster-whisper>=1.0.0
+
+# --- signal
+aiohttp>=3.9
+# CA bundle: python.org builds lack system roots → resolver HTTPS would fail
+certifi>=2024.2.2

@@ -1,0 +1,18 @@
+{
+  "name": "pumpghost",
+  "version": "1.0.0",
+  "description": "Detect fake activity on pump.fun — bump bots, maker bots, volume bots, bundled launches",
+  "type": "module",
+  "scripts": {
+    "scan": "node cli/scan.mjs",
+    "holders": "node cli/holders.mjs",
+    "watch": "node cli/watch.mjs",
+    "dashboard": "node dashboard/server.mjs"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.98.0",
+    "@solana/spl-token": "^0.4.12",
+    "bs58": "^6.0.0",
+    "dotenv": "^16.0.0"
+  }
+}
