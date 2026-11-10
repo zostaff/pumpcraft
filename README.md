@@ -16,8 +16,7 @@
   <b><a href="#03--research">[ research ]</a></b> ·
   <b><a href="#04--architecture">[ architecture ]</a></b> ·
   <b><a href="#05--stack">[ stack ]</a></b> ·
-  <b><a href="#06--article">[ article ]</a></b> ·
-  <b><a href="#07--faq">[ faq ]</a></b>
+  <b><a href="#06--faq">[ faq ]</a></b>
 </p>
 
 <p align="center"><img src="assets/divider.svg?v=2" width="100%"></p>
@@ -169,7 +168,6 @@ pumpcraft/
 │   ├── pumpnuke/              #12  volume tool
 │   ├── pumpghost/             #13  bump & maker
 │   └── shared-lib/                 shared modules
-├── ARTICLE.md                      full article
 └── assets/                         README SVG art
 ```
 
@@ -204,20 +202,7 @@ package-name/
 
 <p align="center"><img src="assets/divider.svg?v=2" width="100%"></p>
 
-<a id="06--article"></a>
-<p align="center"><img src="assets/section-06.svg?v=2" width="100%" alt="section-06"></p>
-
-The full write-up lives in [`ARTICLE.md`](ARTICLE.md):
-
-> **I Crafted 13 Bots That Dissect pump.fun**
->
-> **Part 1:** How I reverse-engineered pump.fun's V3 API and built 7 trading bots — decoding the migration, classifying 666 wallets into 7 strategies, and building each tool from scratch.
->
-> **Part 2:** They patched V3. I built 6 more bots anyway — from same-block Jito sniping to MEV sandwich detection to a 11k-line multi-modal stream sniper.
-
-<p align="center"><img src="assets/divider.svg?v=2" width="100%"></p>
-
-<a id="07--faq"></a>
+<a id="06--faq"></a>
 <p align="center"><img src="assets/section-07.svg?v=2" width="100%" alt="section-07"></p>
 
 <details>
@@ -241,13 +226,13 @@ Yes. These connect to Solana mainnet. Many packages have a <code>DRY_RUN=true</c
 <details>
 <summary><b>Are these profitable?</b></summary>
 <br>
-These are research tools that show how pump.fun bots work. Profitability depends on market conditions, timing, and execution. The article documents win rates from the 666-wallet study — they range from 15% to 80% depending on strategy.
+These are research tools that show how pump.fun bots work. Profitability depends on market conditions, timing, and execution. The 666-wallet study documents win rates ranging from 15% to 80% depending on strategy.
 </details>
 
 <details>
 <summary><b>What's the difference between this and the standalone repos?</b></summary>
 <br>
-Some bots also exist as standalone repos (pumpnuke, firstkiller, bundlescan, pumpghost). This monorepo bundles all 13 in one place with the shared library and the full article. The standalone repos are identical copies.
+Some bots also exist as standalone repos (pumpnuke, firstkiller, bundlescan, pumpghost). This monorepo bundles all 13 in one place with the shared library. The standalone repos are identical copies.
 </details>
 
 <p align="center"><img src="assets/divider.svg?v=2" width="100%"></p>
